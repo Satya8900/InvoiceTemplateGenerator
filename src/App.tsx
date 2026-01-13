@@ -207,134 +207,135 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 p-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-6">
+      <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 p-2 sm:p-4 md:p-6 lg:p-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
             {/* Input Form */}
-            <div className="bg-white rounded-lg shadow-lg p-6 print:hidden">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Invoice Details</h2>
+            <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 print:hidden">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">
+                Invoice Details
+              </h2>
 
-              <div className="space-y-4">
+              <div className="space-y-4 sm:space-y-5">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
                     Business Name
                   </label>
                   <input
                     type="text"
                     value={businessName}
                     onChange={(e) => setBusinessName(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                     placeholder="Enter business name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
                     Address
                   </label>
                   <input
                     type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                     placeholder="Enter address"
                   />
                 </div>
 
-                {/* ── Color Picker ── */}
+                {/* Color Picker */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
                     Invoice Background Color
                   </label>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3">
                     <input
                       type="color"
                       value={invoiceBgColor}
                       onChange={(e) => setInvoiceBgColor(e.target.value)}
                       className="w-12 h-10 rounded cursor-pointer border border-gray-300"
                     />
-                    <span className="text-sm text-gray-600 font-mono">{invoiceBgColor}</span>
+                    <span className="text-xs sm:text-sm text-gray-600 font-mono break-all">{invoiceBgColor}</span>
                   </div>
                 </div>
 
                 <button
                   onClick={handlePrint}
                   disabled={isGenerating}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-green-600 text-white text-sm sm:text-base rounded-lg hover:bg-green-700 transition-colors font-medium disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
-                  <Printer size={20} />
+                  <Printer size={18} className="sm:w-5 sm:h-5" />
                   {isGenerating ? 'Generating PDF...' : 'Download PDF Invoice'}
                 </button>
               </div>
             </div>
 
             {/* Invoice Preview */}
-            <div className="bg-white rounded-lg shadow-lg p-8 print:shadow-none" id="invoice">
-              <div className="border-2 border-gray-800 p-6"
-                style={{ backgroundColor: invoiceBgColor }}
-              >
+            <div className="bg-white rounded-lg shadow-lg p-3 sm:p-4 md:p-6 lg:p-8 print:shadow-none" id="invoice">
+              <div className="border-2 border-gray-800 p-3 sm:p-4 md:p-6" style={{ backgroundColor: invoiceBgColor }}>
                 {/* Header */}
-                <div className="text-center mb-6">
-                  <p className="text-sm text-gray-600 mb-1">Jay Jaganath</p>
-                  <h1 className="text-3xl font-bold text-red-600 mb-2">
+                <div className="text-center mb-4 sm:mb-6">
+                  <p className="text-xs sm:text-sm text-gray-600 mb-1">Jay Jaganath</p>
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-600 mb-1 sm:mb-2 wrap-break-word">
                     {businessName || 'BUSINESS NAME'}
                   </h1>
-                  <p className="text-sm text-blue-800">
+                  <p className="text-xs sm:text-sm text-blue-800 wrap-break-word">
                     {address || 'Business Address'}
                   </p>
                 </div>
 
                 {/* Bill Info */}
-                <div className="flex justify-between items-center mb-3 pb-4">
-                  <div>
-                    <span className="text-gray-700">Bill No. </span>
-                    <span className="inline-block border-b border-dotted border-gray-400 min-w-30 h-6"></span>
+                <div className="flex justify-between items-center gap-2 sm:gap-3 mb-3 pb-4 text-xs sm:text-base">
+                  <div className="flex-1 min-w-0">
+                    <span className="text-gray-700 whitespace-nowrap">Bill No. </span>
+                    <span className="inline-block border-b border-dotted border-gray-400 min-w-12 sm:min-w-30 h-6"></span>
                   </div>
-                  <div>
-                    <span className="text-gray-700">Date: </span>
-                    <span className="inline-block border-b border-dotted border-gray-400 min-w-30 h-6"></span>
+                  <div className="flex-1 min-w-0 text-right">
+                    <span className="text-gray-700 whitespace-nowrap">Date: </span>
+                    <span className="inline-block border-b border-dotted border-gray-400 min-w-12 sm:min-w-30 h-6"></span>
                   </div>
                 </div>
 
                 {/* Sold To */}
-                <div className="mb-6">
+                <div className="mb-4 sm:mb-6 text-xs sm:text-base">
                   <span className="text-gray-700">Sold to M/s </span>
-                  <span className="border-b border-dotted border-gray-400 inline-block min-w-90 h-6"></span>
+                  <span className="border-b border-dotted border-gray-400 inline-block min-w-40 sm:min-w-90 h-6"></span>
                 </div>
 
                 {/* Items Table */}
-                <table className="w-full mb-6 border-2 border-gray-800">
-                  <thead>
-                    <tr className="border-2 border-gray-800">
-                      <th className="text-left py-2 px-2 text-sm font-semibold w-16 border-r-2 border-gray-800">S No.</th>
-                      <th className="text-center py-2 px-2 text-sm font-semibold border-r-2 border-gray-800">Description</th>
-                      <th className="text-center py-2 px-2 text-sm font-semibold w-32">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[...Array(8)].map((_, index) => (
-                      <tr key={index}>
-                        <td className="py-4 px-2 text-sm border-x-2 border-gray-800">&nbsp;</td>
-                        <td className="py-4 px-2 text-sm border-x-2 border-gray-800">&nbsp;</td>
-                        <td className="py-4 px-2 text-sm border-x-2 border-gray-800">&nbsp;</td>
+                <div className="overflow-x-auto mb-4 sm:mb-6">
+                  <table className="w-full border-2 border-gray-800 text-xs sm:text-sm">
+                    <thead>
+                      <tr className="border-2 border-gray-800">
+                        <th className="text-left py-2 px-1 sm:px-2 font-semibold w-12 sm:w-16 border-r-2 border-gray-800">S No.</th>
+                        <th className="text-center py-2 px-1 sm:px-2 font-semibold border-r-2 border-gray-800">Description</th>
+                        <th className="text-center py-2 px-1 sm:px-2 font-semibold w-20 sm:w-32">Amount</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {[...Array(8)].map((_, index) => (
+                        <tr key={index}>
+                          <td className="py-3 sm:py-4 px-1 sm:px-2 border-x-2 border-gray-800">&nbsp;</td>
+                          <td className="py-3 sm:py-4 px-1 sm:px-2 border-x-2 border-gray-800">&nbsp;</td>
+                          <td className="py-3 sm:py-4 px-1 sm:px-2 border-x-2 border-gray-800">&nbsp;</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
                 {/* Grand Total */}
-                <div className="flex justify-between items-center">
-                  <span className="font-bold text-lg">Grand Total</span>
-                  <span className="inline-block border-b border-gray-400 min-w-25 h-7"></span>
+                <div className="flex justify-between items-center text-xs sm:text-base">
+                  <span className="font-bold text-sm sm:text-lg">Grand Total</span>
+                  <span className="inline-block border-b border-gray-400 min-w-20 sm:min-w-25 h-7"></span>
                 </div>
 
                 {/* Signature */}
-                <div className="mt-12 text-right">
-                  <p className="text-sm font-semibold">Signature</p>
+                <div className="mt-8 sm:mt-12 text-right">
+                  <p className="text-xs sm:text-sm font-semibold">Signature</p>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
