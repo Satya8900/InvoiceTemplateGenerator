@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Printer } from 'lucide-react';
 import Footer from './footer';
 import Navbar from './NavBar';
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 15,
   },
-  jayJaganath: {
+  cashMemo: {
     fontSize: 8,
     color: '#4b5563',
     marginBottom: 2,
@@ -139,7 +139,7 @@ const InvoicePDFDocument = ({ businessName, address, invoiceBgColor }: any) => (
           <View key={num} style={[styles.invoiceContainer, { backgroundColor: invoiceBgColor }]}>
             {/* Header */}
             <View style={styles.header}>
-              <Text style={styles.jayJaganath}>Jay Jaganath</Text>
+              <Text style={styles.cashMemo}>Cash Memo</Text>
               <Text style={styles.businessName}>
                 {businessName || 'BUSINESS NAME'}
               </Text>
@@ -221,6 +221,7 @@ export default function App() {
   // Default invoice background color
   const [invoiceBgColor, setInvoiceBgColor] = useState('#ffffff');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [invoice_number, setInvoice_number] = useState<string>("");
 
   const handlePrint = async () => {
     setIsGenerating(true);
@@ -246,6 +247,10 @@ export default function App() {
       setIsGenerating(false);
     }
   };
+
+  useEffect(() => {
+    setInvoice_number(generateInvoiceNumber());
+  }, []);
 
   return (
     <>
@@ -318,7 +323,7 @@ export default function App() {
               <div className="border-2 border-gray-800 p-3 sm:p-4 md:p-6" style={{ backgroundColor: invoiceBgColor }}>
                 {/* Header */}
                 <div className="text-center mb-4 sm:mb-6">
-                  <p className="text-xs sm:text-sm text-gray-600 mb-1">Jay Jaganath</p>
+                  <p className="text-xs sm:text-sm text-gray-600 mb-1">Cash Memo</p>
                   <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-600 mb-1 sm:mb-2 wrap-break-word">
                     {businessName || 'BUSINESS NAME'}
                   </h1>
@@ -331,7 +336,7 @@ export default function App() {
                 <div className="flex justify-between items-center gap-2 sm:gap-3 mb-3 pb-4 text-xs sm:text-base">
                   <div className="flex-1 min-w-0">
                     <span className="text-gray-700 whitespace-nowrap">Bill No. </span>
-                    <span className="inline-block font-bold border-b border-dotted border-gray-400 min-w-12 sm:min-w-30 h-6">{generateInvoiceNumber()}</span>
+                    <span className="inline-block font-bold border-b border-dotted text-red-600 border-gray-400 min-w-12 sm:min-w-30 h-6">{invoice_number}</span>
                   </div>
                   <div className="flex-1 min-w-0 text-right">
                     <span className="text-gray-700 whitespace-nowrap">Date: </span>
