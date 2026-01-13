@@ -45,10 +45,30 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 10,
     paddingBottom: 8,
+    gap: 10,
   },
   billText: {
     fontSize: 8,
     color: '#374151',
+  },
+  billLabelRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    gap: 4,
+  },
+  billNumberContainer: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#374151',
+    minWidth: 50,
+    paddingBottom: 2,
+  },
+  billNumber: {
+    fontSize: 8,
+    // clr-black
+    // color: '#374151',
+    //clr-red
+    color: '#dc2626',
+    fontWeight: 'bold',
   },
   soldTo: {
     marginBottom: 15,
@@ -102,7 +122,7 @@ const styles = StyleSheet.create({
   },
   signature: {
     textAlign: 'right',
-    marginTop: 25,
+    marginTop: 20,
   },
   signatureText: {
     fontSize: 8,
@@ -130,13 +150,23 @@ const InvoicePDFDocument = ({ businessName, address, invoiceBgColor }: any) => (
 
             {/* Bill Info */}
             <View style={styles.billInfo}>
-              <Text style={styles.billText}>Bill No. _________</Text>
-              <Text style={styles.billText}>Date: _________</Text>
+              <View style={styles.billLabelRow}>
+                <Text style={styles.billText}>Bill No.</Text>
+                <View style={styles.billNumberContainer}>
+                  <Text style={styles.billNumber}>{generateInvoiceNumber()}</Text>
+                </View>
+              </View>
+              <View style={styles.billLabelRow}>
+                <Text style={styles.billText}>Date:</Text>
+                <View style={styles.billNumberContainer}>
+                  <Text style={styles.billNumber}> </Text>
+                </View>
+              </View>
             </View>
 
             {/* Sold To */}
             <View style={styles.soldTo}>
-              <Text style={styles.soldToText}>Sold to M/s __________________________________</Text>
+              <Text style={styles.soldToText}>Sold to M/s _______________________________________</Text>
             </View>
 
             {/* Items Table */}
@@ -158,7 +188,9 @@ const InvoicePDFDocument = ({ businessName, address, invoiceBgColor }: any) => (
             {/* Grand Total */}
             <View style={styles.grandTotal}>
               <Text style={styles.grandTotalText}>Grand Total</Text>
-              <Text style={styles.billText}>___________</Text>
+              <View style={[styles.billNumberContainer, { minWidth: 60 }]}>
+                <Text style={styles.billNumber}> </Text>
+              </View>
             </View>
 
             {/* Signature */}
@@ -171,6 +203,17 @@ const InvoicePDFDocument = ({ businessName, address, invoiceBgColor }: any) => (
     </Page>
   </Document>
 );
+
+function generateInvoiceNumber() {
+  const date = new Date();
+
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+
+  const random = Math.floor(1000 + Math.random() * 9000);
+
+  return `INV-${mm}${dd}-${random}`;
+}
 
 export default function App() {
   const [businessName, setBusinessName] = useState('');
@@ -288,7 +331,7 @@ export default function App() {
                 <div className="flex justify-between items-center gap-2 sm:gap-3 mb-3 pb-4 text-xs sm:text-base">
                   <div className="flex-1 min-w-0">
                     <span className="text-gray-700 whitespace-nowrap">Bill No. </span>
-                    <span className="inline-block border-b border-dotted border-gray-400 min-w-12 sm:min-w-30 h-6"></span>
+                    <span className="inline-block font-bold border-b border-dotted border-gray-400 min-w-12 sm:min-w-30 h-6">{generateInvoiceNumber()}</span>
                   </div>
                   <div className="flex-1 min-w-0 text-right">
                     <span className="text-gray-700 whitespace-nowrap">Date: </span>
